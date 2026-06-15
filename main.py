@@ -27,14 +27,13 @@ async def webhook(request: Request):
             }]
         }
         headers = {
-            "Authorization": WABLAS_TOKEN,
-            "Secret": WABLAS_SECRET,
+            "Authorization": f"{WABLAS_TOKEN}.{WABLAS_SECRET}",
             "Content-Type": "application/json"
         }
         r = requests.post(
-            "https://jogja.wablas.com/api/v2/send-message",
-            headers=headers,
-            json=payload
+            "https://texas.wablas.com/api/send-message",
+             headers=headers,
+             json=payload
         )
         print(f"WABLAS: {r.status_code} | {r.text}")
     
