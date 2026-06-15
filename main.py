@@ -9,34 +9,27 @@ WABLAS_SECRET = os.getenv("WABLAS_SECRET")
 
 @app.post("/")
 async def webhook(request: Request):
-    data = await request.json()
+    body = await request.json()
+    phone = body.get("phone")
+    message = body.get("message", "").upper()
     
-    phone = data.get("phone")
-    message = data.get("message", "").upper()
-    is_from_me = data.get("is_from_me", False)
-    
-    print(f"PHONE: {phone} | FROM_ME: {is_from_me} | MSG: {message}")
-    print(f"WABLAS_TOKEN: {WABLAS_TOKEN}")
-    print(f"WABLAS_SECRET: {WABLAS_SECRET}")
-    
-    if not is_from_me and "SALDO" in message:
+    print(f"PHONE: {phone} | FROM_ME: {body.get('isGroup')} | MSG: {message}")
+
+    if message == "SALDO":
         payload = {
-            "data": [{
-                "phone": phone,
-                "message": "Saldo kamu: Rp 50,000"
-            }]
+            "phone": phone,
+            "message": "Saldo kamu: Rp 50,000"
         }
         headers = {
-            "Authorization": f"{WABLAS_TOKEN}.{WABLAS_SECRET}",
-            "Content-Type": "application/json"
+            "Authorization": f"{WABLAS_TOKEN}.{WABLAS_SECRET}"
         }
         r = requests.post(
             "https://texas.wablas.com/api/send-message",
-             headers=headers,
-             json=payload
+            headers=headers,
+            data=payload  # Pake data= bukan json=
         )
         print(f"WABLAS: {r.status_code} | {r.text}")
-    
+
     return {"status": "ok"}
 
 @app.get("/")
