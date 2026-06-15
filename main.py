@@ -55,8 +55,7 @@ def webhook():
             return "ok", 200
         
         # Pake sender kalo ada, kalo kosong pake phone
-        target_phone = sender if sender else phone
-        target_phone = target_phone.replace("@c.us", "").replace("@s.whatsapp.net", "")
+       target_phone = phone.replace("@c.us", "").replace("@s.whatsapp.net", "")
         
         if not target_phone:
             print("GAK ADA NOMOR PENGIRIM")
