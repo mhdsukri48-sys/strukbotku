@@ -15,9 +15,19 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def send_wa(phone, message):
     url = "https://texas.wablas.com/api/send-message"
-    headers = {"Authorization": WABLAS_TOKEN}
-    data = {"phone": phone, "message": message}
-    requests.post(url, headers=headers, data=data)
+    headers = {
+        "Authorization": WABLAS_TOKEN,
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "phone": phone,
+        "message": message
+    }
+    try:
+        res = requests.post(url, headers=headers, json=payload, timeout=10)
+        print(f"WABLAS: {res.status_code} | {res.text}")
+    except Exception as e:
+        print(f"WABLAS ERROR: {e}")
 
 def extract_amount(text):
     match = re.search(r'(?:Rp\.?\s?)?(\d{1,3}(?:[.,]\d{3})+|\d+)', text)
