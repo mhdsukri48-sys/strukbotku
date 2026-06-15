@@ -37,40 +37,37 @@ def extract_amount(text):
 
 @app.route("/webhook", methods=["POST"])
 def webhook():
-    data = request.json
-    phone = data['sender'].replace("@c.us", "")
-    print(f"DARI: {phone} | PESAN: {msg}")
-    msg = data.get('message', '')
-
-    user = supabase.table("users").select("*").eq("id", phone).execute()
-    if not user.data:
-        supabase.table("users").insert({"id": phone, "name": data.get('pushName', 'User')}).execute()
-        send_wa(phone, "Halo! Kirim foto struk + nominal buat topup saldo.\n\nCek saldo: ketik SALDO")
-        return "ok"
-
-    user_data = user.data[0]
-
-    if msg.lower() in ['saldo', 'cek', 'balance']:
-        send_wa(phone, f"Saldo kamu: Rp{user_data['balance']:,}")
-        return "ok"
-
-    amount = extract_amount(msg)
-    if amount and amount >= 10000:
-        total = amount - ADMIN_FEE
-        receipt = supabase.table("receipts").insert({
-            "user_id": phone, "amount": amount, "admin_fee": ADMIN_FEE, "total": total
-        }).execute().data[0]
-
-        supabase.table("transactions").insert({
-            "receipt_id": receipt['id'], "user_id": phone, "type": "topup", "amount": total
-        }).execute()
-
-        supabase.table("receipts").update({"status": "approved"}).eq("id", receipt['id']).execute()
-        send_wa(phone, f"Topup berhasil!\n\nNominal: Rp{amount:,}\nAdmin: Rp{ADMIN_FEE:,}\nMasuk: Rp{total:,}\n\nSaldo: Rp{user_data['balance'] + total:,}")
-    else:
-        send_wa(phone, "Kirim foto struk + nominal ya. Contoh: Rp50.000\n\nCek saldo: SALDO")
-
-    return "ok"
+    try:
+        data = request.json
+        print("DATA WABLAS:", data)
+        
+        # Ambil data aman pake .get() biar gak error
+        sender = data.get('sender', '')
+        phone = data.get('phone', '')
+        from_me = data.get('fromMe', False)
+        message = data.get('message', '')
+        pushname = data.get('pushName', 'User')
+        
+        print(f"SENDER: {sender} | PHONE: {phone} | FROM_ME: {from_me} | MSG: {message}")
+        
+        # Skip kalo pesan dari bot sendiri
+        if from_me:
+            return "ok", 200
+        
+        # Pake sender kalo ada, kalo kosong pake phone
+        target_phone = sender if sender else phone
+        target_phone = target_phone.replace("@c.us", "").replace("@s.whatsapp.net", "")
+        
+        if not target_phone:
+            print("GAK ADA NOMOR PENGIRIM")
+            return "ok", 200
+            
+        send_wa(target_phone, f"Test bot. Lo kirim: {message}")
+        return "ok", 200
+        
+    except Exception as e:
+        print(f"ERROR WEBHOOK: {e}")
+        return "ok", 200  # Tetep return 200 biar Wablas gak 500
 
 if __name__ == "__main__":
     app.run()
