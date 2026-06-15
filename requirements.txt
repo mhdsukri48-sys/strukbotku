@@ -1,4 +1,3 @@
 flask
 requests
 supabase
-gunicorn
