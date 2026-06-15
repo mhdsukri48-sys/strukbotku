@@ -25,8 +25,8 @@ async def webhook(request: Request):
         }
         print(f"AUTH HEADER: {WABLAS_TOKEN}.{WABLAS_SECRET}")
         headers = {
-             "Authorization": f"{WABLAS_TOKEN}.{WABLAS_SECRET}"
-}
+             "Authorization": f"{WABLAS_TOKEN}.{WABLAS_SECRET}" 
+        }
         r = requests.post(
             "https://texas.wablas.com/api/send-message",
             headers=headers,
