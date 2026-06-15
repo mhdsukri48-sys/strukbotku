@@ -1,4 +1,8 @@
 import os
+print("SUPABASE_KEY:", os.environ.get("SUPABASE_KEY")[:10] + "...")
+print("WABLAS_SECRET:", os.environ.get("WABLAS_SECRET")[:5] + "...")
+
+import os
 import requests
 from flask import Flask, request
 from supabase import create_client, Client
