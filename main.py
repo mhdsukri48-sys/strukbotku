@@ -18,8 +18,8 @@ def send_wa(phone, text):
     url = f"{WABLAS_URL}/api/send-message"
     headers = {
         'Authorization': WABLAS_TOKEN,
-        'Secret': os.environ.get("WABLAS_SECRET") # HURUF KECIL
-         'Content-Type': 'application/x-www-form-urlencoded' 
+        'Secret': os.environ.get("WABLAS_SECRET")
+        'Content-Type': 'application/x-www-form-urlencoded' 
     }
     payload = {'phone': phone, 'message': text}
     res = requests.post(url, headers=headers, data=payload)
