@@ -38,7 +38,8 @@ def extract_amount(text):
 @app.route("/webhook", methods=["POST"])
 def webhook():
     data = request.json
-    phone = data['phone'].replace("@c.us", "")
+    phone = data['sender'].replace("@c.us", "")
+    print(f"DARI: {phone} | PESAN: {msg}")
     msg = data.get('message', '')
 
     user = supabase.table("users").select("*").eq("id", phone).execute()
