@@ -7,7 +7,7 @@ app = Flask(__name__)
 # ===== SEMUA UDAH DIISIIN =====
 WABLAS_TOKEN = "B6rzLrCIyvIdP39XPav6cWf2xWyUMKneZBjTjerwogsPJ6EItU"
 SUPABASE_URL = "https://mzcuyneiufvttafdkgyr.supabase.co"
-SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16Y3V5bmVpdWZ2dHRhZmRrZ3lyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NzYwNTcsImV4cCI6MjA5NzA1MjA1N30.JnxrNzgVDegr-6gWh11wIZVpe6A9KYfO8"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16Y3V5bmVpdWZ2dHRhZmRrZ3lyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NzYwNTcsImV4cCI6MjA5NzA1MjA1N30.JnxrNzgVDegr-6gWh11wIZVpe6A9KYfO8zkpBoLuKmA"
 ADMIN_FEE = 1000
 # ==============================
 
