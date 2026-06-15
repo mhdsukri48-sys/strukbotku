@@ -1,0 +1,7 @@
+   flask
+requests
+supabase
+gunicorn
+   ``` → Commit
+   
+   **File 3:** `Procfile` → Paste ini:
