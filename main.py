@@ -41,7 +41,6 @@ def webhook():
         data = request.json
         print("DATA WABLAS:", data)
         
-        # Ambil data aman pake .get() biar gak error
         sender = data.get('sender', '')
         phone = data.get('phone', '')
         from_me = data.get('fromMe', False)
@@ -50,12 +49,10 @@ def webhook():
         
         print(f"SENDER: {sender} | PHONE: {phone} | FROM_ME: {from_me} | MSG: {message}")
         
-        # Skip kalo pesan dari bot sendiri
         if from_me:
             return "ok", 200
         
-        # Pake sender kalo ada, kalo kosong pake phone
-       target_phone = phone.replace("@c.us", "").replace("@s.whatsapp.net", "")
+        target_phone = phone.replace("@c.us", "").replace("@s.whatsapp.net", "")
         
         if not target_phone:
             print("GAK ADA NOMOR PENGIRIM")
@@ -66,7 +63,7 @@ def webhook():
         
     except Exception as e:
         print(f"ERROR WEBHOOK: {e}")
-        return "ok", 200  # Tetep return 200 biar Wablas gak 500
+        return "ok", 200
 
 if __name__ == "__main__":
     app.run()
