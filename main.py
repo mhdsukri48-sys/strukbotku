@@ -19,7 +19,7 @@ def send_wa(phone, text):
     url = f"{WABLAS_URL}/api/send-message"
     headers = {
         'Authorization': WABLAS_TOKEN,
-        'Secret': os.environ.get("WABLAS_SECRET")  
+        'X-Wablas-Secret': 'mx4KE4kO'  
     }
     payload = {'phone': phone, 'message': text}
     res = requests.post(url, headers=headers, json=payload)
