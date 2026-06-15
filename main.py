@@ -21,7 +21,7 @@ def send_wa(phone, text):
         'Secret': os.environ.get("WABLAS_SECRET") # HURUF KECIL
     }
     payload = {'phone': phone, 'message': text}
-    res = requests.post(url, headers=headers, json=payload)
+    res = requests.post(url, headers=headers, data=payload)
     print(f"WABLAS: {res.status_code} | {res.text}")
 
 def get_saldo(phone):
