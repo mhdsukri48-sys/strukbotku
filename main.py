@@ -13,7 +13,10 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 def send_wa(phone, text):
     url = f"{WABLAS_URL}/api/send-message"
-    headers = {'Authorization': WABLAS_TOKEN}
+    headers = {
+        'Authorization': WABLAS_TOKEN,
+        'X-Secret-Key': os.environ.get("WABLAS_SECRET")  # ← Tambahin ini
+    }
     payload = {'phone': phone, 'message': text}
     res = requests.post(url, headers=headers, json=payload)
     print(f"WABLAS: {res.status_code} | {res.text}")
