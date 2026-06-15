@@ -1,7 +1,10 @@
 import os
 import requests
-from flask import Flask, request
-from supabase import create_client, Client
+from fastapi import FastAPI, Request
+
+WABLAS_URL = "https://texas.wablas.com"
+WABLAS_TOKEN = os.environ.get("WABLAS_TOKEN")    
+WABLAS_SECRET = os.environ.get("WABLAS_SECRET") 
 
 print("SUPABASE_KEY:", os.environ.get("SUPABASE_KEY")[:15] + "...")
 print("WABLAS_SECRET:", os.environ.get("WABLAS_SECRET")[:10] + "...")
@@ -18,7 +21,7 @@ def send_wa(phone, text):
     url = f"{WABLAS_URL}/api/send-message"
     headers = {
         'Authorization': WABLAS_TOKEN,
-        'Secret': os.environ.get("WABLAS_SECRET"),
+        'Secret': WABLAS_SECRET, 
         'Content-Type': 'application/x-www-form-urlencoded' 
     }
     payload = {'phone': phone, 'message': text}
