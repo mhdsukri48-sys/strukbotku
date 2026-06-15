@@ -18,7 +18,7 @@ def send_wa(phone, text):
     url = f"{WABLAS_URL}/api/send-message"
     headers = {
         'Authorization': WABLAS_TOKEN,
-        'Secret': os.environ.get("WABLAS_SECRET")
+        'Secret': os.environ.get("WABLAS_SECRET"),
         'Content-Type': 'application/x-www-form-urlencoded' 
     }
     payload = {'phone': phone, 'message': text}
